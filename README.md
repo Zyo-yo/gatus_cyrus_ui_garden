@@ -79,12 +79,12 @@ Download and extract this repository, or clone it using the repository's
 actual HTTPS URL from GitHub's Code button:
 
 ```bash
-git clone <REPOSITORY_HTTPS_URL> gatus_cyrus_ui_garden
+git clone https://github.com/Zyo-yo/gatus_cyrus_ui_garden gatus_cyrus_ui_garden
 cd gatus_cyrus_ui_garden
 npm ci
 ```
 
-Replace `<REPOSITORY_HTTPS_URL>` with the real URL; it is a placeholder.
+The command above clones this assignment repository.
 
 Run subsequent project commands from the directory containing
 package.json and Dockerfile.
@@ -710,7 +710,7 @@ Before submitting:
 6. Include the GitHub repository link.
 7. Confirm the submission receipt.
 
-GitHub repository: TO BE ADDED AFTER PUBLICATION.
+GitHub repository: https://github.com/Zyo-yo/gatus_cyrus_ui_garden
 
 ## References
 
