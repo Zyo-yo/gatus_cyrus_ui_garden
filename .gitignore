@@ -21,3 +21,15 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+*storybook.log
+storybook-static
+
+# Generated Storybook output
+/storybook-static/
+
+# Test coverage
+/coverage/
+
+# Accidental nested repository
+/gatus_cyrus_coding_assignment12/
