@@ -12,9 +12,8 @@ const StyledElement = styled.tr<{
   font: inherit;
   background-color: ${({ $disabled, $backgroundColor }) =>
     $disabled ? '#d1d5db' : $backgroundColor};
-  color: ${({ $disabled, $textColor }) =>
-    $disabled ? '#4b5563' : $textColor};
-  cursor: ${({ $disabled }) => $disabled ? 'not-allowed' : 'default'};
+  color: ${({ $disabled, $textColor }) => ($disabled ? '#4b5563' : $textColor)};
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'default')};
 `;
 
 export function TableRow({
@@ -31,7 +30,6 @@ export function TableRow({
 
   return (
     <TableDisabledContext.Provider value={isDisabled}>
-      
       <StyledElement
         {...props}
         aria-disabled={isDisabled}
@@ -50,7 +48,6 @@ export function TableRow({
       >
         {children}
       </StyledElement>
-      
     </TableDisabledContext.Provider>
   );
 }

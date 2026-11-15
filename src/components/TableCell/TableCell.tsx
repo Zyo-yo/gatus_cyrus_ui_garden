@@ -12,9 +12,8 @@ const StyledElement = styled.td<{
   font: inherit;
   background-color: ${({ $disabled, $backgroundColor }) =>
     $disabled ? '#d1d5db' : $backgroundColor};
-  color: ${({ $disabled, $textColor }) =>
-    $disabled ? '#4b5563' : $textColor};
-  cursor: ${({ $disabled }) => $disabled ? 'not-allowed' : 'default'};
+  color: ${({ $disabled, $textColor }) => ($disabled ? '#4b5563' : $textColor)};
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'default')};
 
   padding: 12px;
   border: 1px solid #9ca3af;
@@ -41,7 +40,6 @@ export function TableCell({
 
   return (
     <TableDisabledContext.Provider value={isDisabled}>
-      
       <StyledElement
         {...props}
         aria-disabled={isDisabled}
@@ -60,7 +58,6 @@ export function TableCell({
       >
         {children}
       </StyledElement>
-      
     </TableDisabledContext.Provider>
   );
 }

@@ -16,17 +16,16 @@ const Frame = styled.figure<VisualProps>`
   border-radius: 12px;
   background-color: ${({ $disabled, $backgroundColor }) =>
     $disabled ? '#d1d5db' : $backgroundColor};
-  color: ${({ $disabled, $textColor }) =>
-    $disabled ? '#4b5563' : $textColor};
-  cursor: ${({ $disabled }) => $disabled ? 'not-allowed' : 'default'};
+  color: ${({ $disabled, $textColor }) => ($disabled ? '#4b5563' : $textColor)};
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'default')};
 
   img {
     display: block;
     width: 100%;
     height: auto;
     border-radius: 8px;
-    opacity: ${({ $disabled }) => $disabled ? 0.35 : 1};
-    filter: ${({ $disabled }) => $disabled ? 'grayscale(1)' : 'none'};
+    opacity: ${({ $disabled }) => ($disabled ? 0.35 : 1)};
+    filter: ${({ $disabled }) => ($disabled ? 'grayscale(1)' : 'none')};
   }
 
   figcaption {
@@ -69,10 +68,8 @@ export function Img({
       }}
       onClick={disabled ? undefined : onClick}
     >
-
-        <img src={src} alt={alt} />
-        <figcaption>{title}</figcaption>
-
+      <img src={src} alt={alt} />
+      <figcaption>{title}</figcaption>
     </Frame>
   );
 }

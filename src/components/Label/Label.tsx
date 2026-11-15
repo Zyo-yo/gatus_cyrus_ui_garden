@@ -16,9 +16,8 @@ const StyledLabel = styled.label<{
   overflow-wrap: anywhere;
   background-color: ${({ $disabled, $backgroundColor }) =>
     $disabled ? '#d1d5db' : $backgroundColor};
-  color: ${({ $disabled, $textColor }) =>
-    $disabled ? '#4b5563' : $textColor};
-  cursor: ${({ $disabled }) => $disabled ? 'not-allowed' : 'default'};
+  color: ${({ $disabled, $textColor }) => ($disabled ? '#4b5563' : $textColor)};
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'default')};
 
   @media (max-width: 480px) {
     padding: 6px 8px;

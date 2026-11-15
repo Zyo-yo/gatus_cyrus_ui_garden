@@ -103,7 +103,9 @@ function App() {
       <header>
         <Label text="Assignment 12 · Cyrus Gatus - Hello Maninder! 👋" />
         <h1>UI Garden</h1>
-        <p>A responsive React component library built with styled-components.</p>
+        <p>
+          A responsive React component library built with styled-components.
+        </p>
         <Toggle>
           <input
             type="checkbox"
@@ -204,7 +206,9 @@ function App() {
             </TableRow>
             <TableRow>
               <TableCell>Tables</TableCell>
-              <TableCell>Table, TableHeader, TableRow, TableCell, TableFooter</TableCell>
+              <TableCell>
+                Table, TableHeader, TableRow, TableCell, TableFooter
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Media</TableCell>

@@ -21,7 +21,27 @@ const meta = {
     disabled: false,
   },
   render: (args) => (
-    <Table {...args}><><thead><tr><th scope="col">Course</th><th scope="col">Status</th></tr></thead><tbody><tr><td>React</td><td>Complete</td></tr></tbody><tfoot><tr><td colSpan={2}>1 course</td></tr></tfoot></></Table>
+    <Table {...args}>
+      <>
+        <thead>
+          <tr>
+            <th scope="col">Course</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>React</td>
+            <td>Complete</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan={2}>1 course</td>
+          </tr>
+        </tfoot>
+      </>
+    </Table>
   ),
 } satisfies Meta<typeof Table>;
 

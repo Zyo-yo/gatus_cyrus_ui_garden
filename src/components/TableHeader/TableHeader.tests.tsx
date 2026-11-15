@@ -6,9 +6,15 @@ import { TableHeader } from './TableHeader';
 function Example({ disabled = false }: { disabled?: boolean }) {
   return (
     <table>
-      <TableHeader data-testid="subject" backgroundColor="#eff6ff"
-        disabled={disabled}>
-        <tr><th scope="col">Course</th><th scope="col">Status</th></tr>
+      <TableHeader
+        data-testid="subject"
+        backgroundColor="#eff6ff"
+        disabled={disabled}
+      >
+        <tr>
+          <th scope="col">Course</th>
+          <th scope="col">Status</th>
+        </tr>
       </TableHeader>
     </table>
   );
@@ -22,17 +28,21 @@ test('renders a visible TableHeader', () => {
 test('changes the background colour when disabled', () => {
   const { rerender } = render(<Example />);
   expect(screen.getByTestId('subject')).toHaveStyleRule(
-    'background-color', '#eff6ff'
+    'background-color',
+    '#eff6ff',
   );
 
   rerender(<Example disabled />);
   expect(screen.getByTestId('subject')).toHaveStyleRule(
-    'background-color', '#d1d5db'
+    'background-color',
+    '#d1d5db',
   );
   expect(screen.getByTestId('subject')).toHaveStyleRule(
-    'cursor', 'not-allowed'
+    'cursor',
+    'not-allowed',
   );
   expect(screen.getByTestId('subject')).toHaveAttribute(
-    'aria-disabled', 'true'
+    'aria-disabled',
+    'true',
   );
 });

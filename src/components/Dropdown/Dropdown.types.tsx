@@ -5,8 +5,7 @@ export interface DropdownOption {
   value: string;
 }
 
-export interface DropdownProps
-  extends SelectHTMLAttributes<HTMLSelectElement> {
+export interface DropdownProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
   options: DropdownOption[];
   backgroundColor?: string;

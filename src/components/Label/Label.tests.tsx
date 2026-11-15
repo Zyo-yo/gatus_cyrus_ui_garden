@@ -8,7 +8,7 @@ test('renders a visible label associated with its input', () => {
     <>
       <Label text="Email address" htmlFor="email" />
       <input id="email" />
-    </>
+    </>,
   );
   expect(screen.getByText('Email address')).toBeVisible();
   expect(screen.getByLabelText('Email address')).toBeVisible();
@@ -16,20 +16,21 @@ test('renders a visible label associated with its input', () => {
 
 test('changes its background colour when disabled', () => {
   const { rerender } = render(
-    <Label text="Email address" backgroundColor="#eff6ff" />
+    <Label text="Email address" backgroundColor="#eff6ff" />,
   );
   expect(screen.getByText('Email address')).toHaveStyleRule(
-    'background-color', '#eff6ff'
+    'background-color',
+    '#eff6ff',
   );
 
-  rerender(
-    <Label text="Email address" backgroundColor="#eff6ff" disabled />
+  rerender(<Label text="Email address" backgroundColor="#eff6ff" disabled />);
+  expect(screen.getByText('Email address')).toHaveStyleRule(
+    'background-color',
+    '#d1d5db',
   );
   expect(screen.getByText('Email address')).toHaveStyleRule(
-    'background-color', '#d1d5db'
-  );
-  expect(screen.getByText('Email address')).toHaveStyleRule(
-    'cursor', 'not-allowed'
+    'cursor',
+    'not-allowed',
   );
 });
 
@@ -39,7 +40,7 @@ test('blocks activation of the associated input when disabled', () => {
     <>
       <Label text="Subscribe" htmlFor="subscribe" disabled onClick={onClick} />
       <input id="subscribe" type="checkbox" />
-    </>
+    </>,
   );
   fireEvent.click(screen.getByText('Subscribe'));
   expect(screen.getByLabelText('Subscribe')).not.toBeChecked();

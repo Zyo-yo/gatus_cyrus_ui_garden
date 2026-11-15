@@ -1,723 +1,446 @@
-# Assignment 12: Web Component Library
+# Assignment 13: UI Component Library with Build Checks
 
-**Student:** Cyrus Gatus  
-**Project:** UI Garden
+**Student:** Cyrus Gatus
 
-A responsive React component library built with Create React App,
-TypeScript, Storybook, and styled-components.
+This assignment extends the React component library from Assignment 12
+with automated code quality checks.
 
-The React showcase demonstrates all 13 components. Storybook provides
-individual examples, editable controls, and default/disabled states.
+## Assignment 13 location
 
-## Quick start
+Repository:
+https://github.com/Zyo-yo/gatus_cyrus_ui_garden
 
-Open Docker Desktop and wait for its engine to start.
+Assignment branch:
+https://github.com/Zyo-yo/gatus_cyrus_ui_garden/tree/assignment13
 
-Open Ubuntu from PowerShell:
+Use the assignment13 branch. The master branch contains the earlier
+Assignment 12 version until changes are merged.
 
-```powershell
-wsl -d Ubuntu
-```
+## Requirements implemented
 
-Enter the development project:
+| Requirement                 | Implementation                                                |
+| --------------------------- | ------------------------------------------------------------- |
+| Production CRA application  | React Scripts production build served by Nginx                |
+| Website address             | http://localhost:8018 or http://127.0.0.1:8018                |
+| Container name              | gatus_cyrus_coding_assignment13                               |
+| Working directory           | /gatus_cyrus_ui_garden_build_checks                           |
+| Prettier check              | npm run format:check                                          |
+| ESLint check                | npm run lint                                                  |
+| Automated tests             | npm run test:ci                                               |
+| Additional TypeScript check | npm run typecheck                                             |
+| Local pre-commit checks     | Husky runs npm run check                                      |
+| Remote checks               | GitHub Actions runs npm run check on pushes and pull requests |
+| Build checks                | Docker and GitHub Actions also build the production app       |
 
-```bash
-cd ~/projects/gatus_cyrus_ui_garden
-```
+## Instructor quick start: Docker
 
-For a previously created assignment container:
+Prerequisites:
 
-```bash
-docker start gatus_cyrus_coding_assignment12
-```
+- Docker installed and running with Linux-container support.
+- Internet access to download base images and npm dependencies.
+- An available host port 8018.
 
-Open http://localhost:8083.
+Local Node.js, npm, and Storybook installations are not required
+for the Docker instructions.
 
-For a first-time installation, follow the installation and Docker sections.
-
-## Tools and prerequisites
-
-Development used:
-
-- Node.js 24
-- npm 11
-- Create React App 5.1.0
-- React Scripts 5.0.1
-- TypeScript 4.9.5
-- Storybook 8.6.14
-- styled-components 6.1.19
-- jest-styled-components 7.2.0
-- React Testing Library and Jest
-- Docker Desktop with Linux containers
-- Ubuntu through WSL 2
-
-The committed package-lock.json records the resolved npm dependencies.
-
-Docker alone is sufficient to build and run the production app.
-Local Node.js and npm are needed for development, Storybook, and local tests.
-
-Check tools inside Ubuntu:
+Clone the assignment branch:
 
 ```bash
-node --version
-npm --version
-npx --version
-docker --version
-docker info
-```
-
-If Docker is unavailable inside Ubuntu:
-
-1. Open Docker Desktop.
-2. Go to Settings > Resources > WSL Integration.
-3. Enable Ubuntu integration and apply the changes.
-4. Open a new Ubuntu terminal and retry the Docker commands.
-
-## Download and install
-
-Download and extract this repository, or clone it using the repository's
-actual HTTPS URL from GitHub's Code button:
-
-```bash
-git clone https://github.com/Zyo-yo/gatus_cyrus_ui_garden gatus_cyrus_ui_garden
-cd gatus_cyrus_ui_garden
-npm ci
-```
-
-The command above clones this assignment repository.
-
-Run subsequent project commands from the directory containing
-package.json and Dockerfile.
-
-For WSL development, keep the project inside Ubuntu, such as:
-
-```text
-/home/<ubuntu-user>/projects/gatus_cyrus_ui_garden
-```
-
-The development location on this machine is:
-
-```bash
-cd ~/projects/gatus_cyrus_ui_garden
-```
-
-An older copy exists in the Windows GitHub directory. The Ubuntu copy
-is the active project.
-
-Do not copy node_modules between operating systems. Use `npm ci`
-to install dependencies from the lockfile.
-
-## Original project setup
-
-The initial project was created with:
-
-```bash
-npx create-react-app@5.1.0 gatus_cyrus_ui_garden --template typescript
+git clone --branch assignment13 --single-branch https://github.com/Zyo-yo/gatus_cyrus_ui_garden.git
 cd gatus_cyrus_ui_garden
 ```
 
-These commands describe the original scaffold. Do not run them inside
-the downloaded assignment.
+Alternatively, download the ZIP from the assignment13 branch and extract it.
+Open a terminal in the directory containing Dockerfile and package.json.
+A ZIP download does not require Git to build the Docker image.
 
-CRA is used because it is explicitly required by the assignment.
-
-Storybook 10 was initially installed, but its type declarations were
-incompatible with the project's TypeScript 4.9 setup. The project was
-changed to the following exact package versions:
+Build:
 
 ```bash
-npm install --save-dev --save-exact storybook@8.6.14 @storybook/react-webpack5@8.6.14 @storybook/preset-create-react-app@8.6.14 @storybook/addon-docs@8.6.14 @storybook/addon-essentials@8.6.14 @storybook/test@8.6.14 eslint-plugin-storybook@0.12.0
-npm install --save-exact styled-components@6.1.19
-npm install --save-dev --save-exact jest-styled-components@7.2.0
+docker build -t gatus_cyrus_assignment13 .
 ```
 
-The repository includes the completed Storybook configuration and source.
-Installing packages alone does not recreate those files.
-
-Storybook configuration uses:
-
-- `@storybook/react-webpack5` as the framework.
-- `@storybook/preset-create-react-app` for CRA integration.
-- `@storybook/addon-essentials` for Controls, Docs, Actions, and other tools.
-
-Story files import `Meta` and `StoryObj` from `@storybook/react`.
-Story test utilities come from `@storybook/test`.
-
-## Run the React development app
+Create and start the required container:
 
 ```bash
-npm start
+docker run -d -p 8018:80 --name gatus_cyrus_coding_assignment13 gatus_cyrus_assignment13
 ```
 
-Alternatively, prevent automatic browser opening:
+Open http://localhost:8018.
+
+The build installs dependencies from package-lock.json, runs quality
+checks and tests, and creates the production build inside Docker.
+
+Local node_modules, existing build output, and .git are excluded.
+No files outside the submitted project are required.
+
+The image uses standard Node and Nginx Linux images without a
+machine-specific CPU platform override. The clean build and runtime
+were verified on the student's machine; other devices have not yet
+been independently tested.
+
+## Verify the Docker requirements
 
 ```bash
-BROWSER=none npm start
-```
-
-Open http://localhost:3000.
-
-Press Ctrl+C in the terminal to stop the development server.
-
-This is the development app. Docker serves a separate production build
-at http://localhost:8083.
-
-## Run Storybook
-
-```bash
-npm run storybook -- --no-open
-```
-
-Open http://localhost:6006.
-
-Under Library, select a component and its Default or Disabled story.
-
-Controls allow editing properties such as:
-
-- Text, labels, titles, or descriptions where applicable
-- Background colour
-- Text colour
-- Disabled state
-- Dropdown options
-- Image source and alternative text
-
-Table content is demonstrated through its stories and the Composed example.
-
-Disabled components override the selected background with #d1d5db.
-Their cursor changes to not-allowed. Interactive components also block
-their normal actions.
-
-Images are faded and greyscaled in the disabled state so the changed
-background remains visible.
-
-Press Ctrl+C to stop Storybook. Run one development server at a time
-on machines with limited resources.
-
-### Storybook demonstration notes
-
-- Library > Tables > Table > Composed combines all five table components.
-- Change TableCell colours in TableCell > Default.
-- Each table subcomponent owns its background. Changing the parent table's
-  background does not override every child's normal colour.
-- Disabling the composed table propagates through its component children.
-- Storybook control edits are temporary unless explicitly saved.
-- The Example section contains generated Storybook starter examples.
-
-## Component files
-
-Components are located in src/components.
-
-Each required component folder contains:
-
-```text
-ComponentName.tsx
-ComponentName.stories.tsx
-ComponentName.types.tsx
-ComponentName.tests.tsx
-Index.ts
-```
-
-| Component | Purpose |
-| --- | --- |
-| Button | Native button with editable label and colours |
-| Label | Text label with optional input association |
-| Text | Responsive paragraph |
-| Table | Responsive table container |
-| TableHeader | Table header section using thead |
-| TableRow | Table row using tr |
-| TableCell | Table data cell using td |
-| TableFooter | Table footer section using tfoot |
-| Dropdown | Labelled native select |
-| RadioButton | Labelled native radio input |
-| Img | Responsive image with caption |
-| HeroImage | Image section with headline and description |
-| Card | Image, heading, and descriptive content |
-
-tableState.tsx shares the disabled state between composed table components.
-
-The local sample image is public/images/garden.svg.
-It does not require an external image service.
-
-## Automated tests
-
-### TypeScript
-
-```bash
-npx tsc --noEmit
-```
-
-A successful check returns to the prompt without errors.
-
-### All component tests
-
-```bash
-CI=true npm test -- --watchAll=false --runInBand --testMatch='**/src/components/**/*.tests.tsx'
-```
-
-Expected result: **36 passing tests across 13 component suites**.
-
-Each component has tests for:
-
-1. Visibility.
-2. Background colour changing when disabled.
-
-Additional tests cover interactions such as disabled clicks, dropdown
-selection, label activation, and radio-group behaviour.
-
-jest-styled-components checks the generated CSS rules, including the
-native disabled selector used by Button and Dropdown.
-
-### React showcase interaction test
-
-```bash
-CI=true npm test -- --watchAll=false --runInBand App.test.tsx
-```
-
-Expected result: **1 passing showcase test**.
-
-This test checks that:
-
-- The button increments its click count.
-- The global toggle disables the button, dropdown, and radio inputs.
-- Clicking the disabled button does not increment the count.
-- Re-enabling the components restores button interaction.
-
-The component and showcase commands together run **37 tests**.
-
-The explicit component test pattern is necessary because the assignment
-requires `.tests.tsx`, while CRA normally discovers `.test.tsx`.
-
-## Responsive and manual verification
-
-Use Storybook's viewport tools or resize the browser.
-
-Check a narrow viewport around 375px and a desktop viewport:
-
-1. Text wraps within its container.
-2. Images scale without overflowing.
-3. Form controls remain usable.
-4. Cards and showcase columns adapt to the available width.
-5. The table remains within the page; its wrapper allows horizontal
-   scrolling if needed.
-6. Default and disabled states show the intended colours and cursors.
-
-Automated DOM tests do not replace these browser layout checks.
-
-## Production builds
-
-Build the optimized React showcase:
-
-```bash
-npm run build
-```
-
-Output: build/
-
-Build the static Storybook:
-
-```bash
-npm run build-storybook
-```
-
-Output: storybook-static/
-
-Both builds completed successfully during development.
-Storybook reported bundle-size warnings; these did not prevent its build.
-
-The Dockerfile serves the CRA showcase production build.
-Storybook is run separately for component documentation and controls.
-
-## Docker configuration
-
-The Dockerfile uses two stages:
-
-1. Node installs locked dependencies with `npm ci` and runs `npm run build`.
-2. Nginx serves only the resulting production files.
-
-Both stages use the required working directory:
-
-```text
-/gatus_cyrus_ui_garden
-```
-
-nginx.conf sets this directory as the website root.
-
-The final container runs Nginx, rather than the React development server.
-
-.dockerignore excludes node_modules, generated builds, Git metadata,
-coverage, and npm debug logs from the build context.
-
-### Build the production image
-
-Open Docker Desktop and wait for the engine to start.
-
-From the project directory:
-
-```bash
-docker build -t gatus_cyrus_assignment12 .
-```
-
-The final dot supplies the current project as the build context.
-
-### Create and run the container
-
-```bash
-docker run -d -p 8083:80 --name gatus_cyrus_coding_assignment12 gatus_cyrus_assignment12
-```
-
-Open http://localhost:8083.
-
-- Container name: gatus_cyrus_coding_assignment12
-- Host port: 8083
-- Container port: 80
-- Working directory: /gatus_cyrus_ui_garden
-
-The container name is assigned with `--name` when creating the container.
-It is not assigned by the Dockerfile.
-
-### Verify the deployment
-
-Show the running container and port mapping:
-
-```bash
-docker ps --filter name=gatus_cyrus_coding_assignment12
-```
-
-Check the working directory:
-
-```bash
-docker exec gatus_cyrus_coding_assignment12 pwd
+docker ps --filter name=gatus_cyrus_coding_assignment13
+docker exec gatus_cyrus_coding_assignment13 pwd
+curl -I http://127.0.0.1:8018
 ```
 
 Expected:
 
-```text
-/gatus_cyrus_ui_garden
-```
+- Container name: gatus_cyrus_coding_assignment13
+- Port mapping: 8018:80
+- Working directory: /gatus_cyrus_ui_garden_build_checks
+- HTTP response: 200 OK
 
-Show the production files:
-
-```bash
-docker exec gatus_cyrus_coding_assignment12 ls
-```
-
-Expected contents include index.html, static, and images.
-
-Check the HTTP response:
+Show production files and logs:
 
 ```bash
-curl -I http://localhost:8083
+docker exec gatus_cyrus_coding_assignment13 ls
+docker logs gatus_cyrus_coding_assignment13
 ```
 
-Expected status: HTTP 200.
+## Stop, restart, and update Docker
 
-View server logs:
+Stop:
 
 ```bash
-docker logs gatus_cyrus_coding_assignment12
+docker stop gatus_cyrus_coding_assignment13
 ```
 
-The Docker-hosted showcase loaded successfully during development.
-The commands above allow the presenter or reviewer to verify its
-configuration directly.
-
-### Stop and restart
+Restart the existing container:
 
 ```bash
-docker stop gatus_cyrus_coding_assignment12
-docker start gatus_cyrus_coding_assignment12
+docker start gatus_cyrus_coding_assignment13
 ```
 
-An existing container can be started from any directory.
+Use docker start for an existing container. Repeating docker run with
+the same name produces a name conflict.
 
-Use `docker start` for an existing container. Repeating `docker run`
-with the same name causes a name conflict.
-
-### Apply source changes to Docker
-
-The image contains a snapshot of the source at build time.
-Source edits do not update the running container automatically.
-
-Build the updated image first:
+After changing source, build a new image:
 
 ```bash
-docker build -t gatus_cyrus_assignment12 .
+docker build -t gatus_cyrus_assignment13 .
 ```
 
 Then replace only this assignment container:
 
 ```bash
-docker stop gatus_cyrus_coding_assignment12
-docker rm gatus_cyrus_coding_assignment12
-docker run -d -p 8083:80 --name gatus_cyrus_coding_assignment12 gatus_cyrus_assignment12
+docker stop gatus_cyrus_coding_assignment13
+docker rm gatus_cyrus_coding_assignment13
+docker run -d -p 8018:80 --name gatus_cyrus_coding_assignment13 gatus_cyrus_assignment13
 ```
 
-Open http://localhost:8083 and refresh.
-
-## Presentation walkthrough
-
-### Before presenting
-
-1. Open Docker Desktop and wait for its engine.
-2. Open Ubuntu:
-
-   ```powershell
-   wsl -d Ubuntu
-   ```
-
-3. Enter the project:
-
-   ```bash
-   cd ~/projects/gatus_cyrus_ui_garden
-   ```
-
-4. Have the test commands, Storybook, and Docker commands below ready.
-5. If source files changed, rebuild the image and replace the container
-   using the update instructions above.
-
-### 1. Introduce the project
-
-Say:
-
-“UI Garden is my React and TypeScript component library. It uses
-styled-components for styling, Storybook for isolated examples and
-controls, and Jest with React Testing Library for automated tests.”
-
-### 2. Demonstrate the Docker production app
-
-Start the existing container:
+To verify a build without cached build steps:
 
 ```bash
-docker start gatus_cyrus_coding_assignment12
+docker build --no-cache -t gatus_cyrus_assignment13 .
 ```
 
-Open http://localhost:8083.
+## Dockerfile explanation
 
-Demonstrate:
+The Node build stage:
 
-- All component sections, including the table and images.
-- The button click counter.
-- Dropdown selection.
-- Radio buttons selecting one option at a time.
-- The global disabled toggle.
-- Grey backgrounds, prohibited cursors, and blocked form interactions.
-- The responsive layout at a narrow browser width.
+1. Uses /gatus_cyrus_ui_garden_build_checks as its working directory.
+2. Runs npm ci using the committed dependency lockfile.
+3. Runs npm run check.
+4. Runs npm run build.
 
-Explain:
+HUSKY=0 disables Git hook installation inside Docker because .git is
+not part of the build context. It does not disable the explicit checks.
 
-“This page is an optimized CRA production build served by Nginx inside
-Docker. Host port 8083 maps to the container's port 80.”
+CI=true enables CI behaviour during tests and the production build.
 
-### 3. Prove the Docker requirements
+The final Nginx stage contains the production website, rather than
+the development server or Node dependency tree.
+
+nginx.conf serves files from the required working directory.
+EXPOSE 80 documents the internal port; docker run publishes it as 8018.
+
+## Local development setup
+
+For Windows, open Ubuntu from PowerShell:
+
+```powershell
+wsl -d Ubuntu
+```
+
+The existing development project is:
 
 ```bash
-docker ps --filter name=gatus_cyrus_coding_assignment12
-docker exec gatus_cyrus_coding_assignment12 pwd
-curl -I http://localhost:8083
+cd ~/projects/gatus_cyrus_ui_garden
+git switch assignment13
 ```
 
-Point out:
+For a fresh clone, use the clone instructions above.
 
-- gatus_cyrus_coding_assignment12
-- Port 8083 mapped to 80
-- /gatus_cyrus_ui_garden
-- HTTP 200
+Development uses Node.js 24. Check the tools:
 
-Open Dockerfile and nginx.conf to explain the build and serving stages.
+```bash
+node --version
+npm --version
+git --version
+```
 
-### 4. Demonstrate Storybook
+Install the locked dependencies:
+
+```bash
+npm ci
+```
+
+The package.json prepare script runs Husky to install local Git hooks.
+
+Verify:
+
+```bash
+git config --get core.hooksPath
+```
+
+Expected: .husky/\_
+
+Use a Git clone for pre-commit demonstrations. A ZIP download has no
+Git repository and cannot demonstrate commits until Git is initialized.
+
+## Quality tools and commands
+
+Tools added for Assignment 13:
+
+```bash
+npm install --save-dev --save-exact eslint@8.57.1 prettier@3.6.2 husky@9.1.7 eslint-config-prettier@9.1.0
+```
+
+ESLint 8 is used for compatibility with CRA's existing ESLint configuration.
+
+Husky was initialized with:
+
+```bash
+npx husky init
+```
+
+The generated .husky/pre-commit was replaced with:
+
+```sh
+npm run check
+```
+
+For an existing clone, use npm ci rather than repeating initialization.
+
+| Command                 | Purpose                                      |
+| ----------------------- | -------------------------------------------- |
+| npm run format          | Apply Prettier formatting                    |
+| npm run format:check    | Check formatting without changing files      |
+| npm run lint            | ESLint checks with zero warnings allowed     |
+| npm run typecheck       | TypeScript validation without emitting files |
+| npm run test:ci         | All tests, without watch mode                |
+| npm run check           | Run all four checks sequentially             |
+| npm run build           | Build the optimized CRA showcase             |
+| npm run build-storybook | Build static Storybook documentation         |
+
+Run the complete pipeline:
+
+```bash
+npm run check
+```
+
+Expected: formatting, lint, and TypeScript pass; 37 tests pass
+across 14 suites.
+
+The test pattern discovers both .test.tsx and .tests.tsx files.
+This includes all component tests and the showcase interaction test.
+
+## Husky pre-commit behaviour
+
+Every normal commit runs npm run check.
+
+The pipeline stops at the first failed command. The commit is rejected
+with a nonzero exit status.
+
+The hook checks the working tree. Stage the intended final changes
+before committing. GitHub Actions independently checks the committed
+snapshot after it is pushed.
+
+Inspect and commit changes:
+
+```bash
+git status --short
+git diff
+git add .
+git commit -m "Describe the changes"
+```
+
+The following failures were verified with real attempted commits:
+
+- An unformatted JSON file was rejected by Prettier.
+- An undefined JavaScript variable was rejected by ESLint.
+- A deliberately failing test was rejected by Jest.
+
+All demonstration files were removed afterward.
+
+TypeScript checking was also added because CRA's ESLint configuration
+leaves some TypeScript correctness checks to the TypeScript compiler.
+
+### Reproduce a formatting rejection
+
+Start with a clean staging area. Ensure quality-check-demo.json does
+not already exist.
+
+```bash
+printf '{"demo":true}' > quality-check-demo.json
+git add -- quality-check-demo.json
+git commit -m "Demonstrate formatting rejection"
+```
+
+Expected: Prettier fails and no commit is created.
+
+Clean up after the expected rejection:
+
+```bash
+git restore --staged -- quality-check-demo.json
+rm -- quality-check-demo.json
+```
+
+Verify recovery:
+
+```bash
+npm run check
+```
+
+## GitHub Actions
+
+Workflow file: .github/workflows/quality-checks.yml
+
+The workflow runs on:
+
+- Pushes to any branch.
+- Pull requests.
+- Manual workflow dispatch where available.
+
+It uses an Ubuntu runner with Node.js 24 and performs:
+
+1. Repository checkout.
+2. npm ci.
+3. npm run check.
+4. npm run build.
+
+HUSKY=0 skips installing developer hooks on the runner.
+The remote workflow explicitly executes all checks regardless of
+whether local commit hooks ran.
+
+A failed command fails the workflow, producing a red failure status
+and diagnostic logs in the repository's Actions tab.
+
+Email notifications depend on the user's GitHub notification settings.
+Review the repository's Actions tab to confirm the result.
+
+Local hooks can be bypassed. GitHub Actions detects failures after a
+push; it does not prevent the push itself. To block merging failed
+changes, configure branch protection or a ruleset requiring the
+"Quality checks and production build" status check.
+
+Remote workflow verification: pending the first pushed workflow run.
+
+## Run the component library locally
+
+React development showcase:
+
+```bash
+BROWSER=none npm start
+```
+
+Open http://localhost:3000. Press Ctrl+C to stop.
+
+Storybook:
 
 ```bash
 npm run storybook -- --no-open
 ```
 
-Open http://localhost:6006.
+Open http://localhost:6006. Press Ctrl+C to stop.
 
-Demonstrate:
+The production Docker showcase is separately available at
+http://localhost:8018.
 
-1. Library > Button > Default.
-2. Change its label and background colour in Controls.
-3. Enable disabled and show the grey background and cursor.
-4. Open its Disabled story.
-5. Open Dropdown and RadioButton.
-6. Open Tables > Table > Composed.
-7. Open TableCell > Default and change its background.
-8. Open Img, HeroImage, and Card.
-9. Use a narrow viewport to demonstrate responsiveness.
+## Presentation walkthrough
 
-Explain that the disabled background intentionally overrides the
-custom background colour.
+1. Open Docker Desktop and Ubuntu.
 
-Press Ctrl+C before running tests.
+2. Enter the project:
 
-### 5. Demonstrate automated tests
+   ```bash
+   cd ~/projects/gatus_cyrus_ui_garden
+   ```
 
-```bash
-CI=true npm test -- --watchAll=false --runInBand --testMatch='**/src/components/**/*.tests.tsx'
-```
+3. Start the existing container:
 
-Show the 36 passing component tests.
+   ```bash
+   docker start gatus_cyrus_coding_assignment13
+   ```
 
-```bash
-CI=true npm test -- --watchAll=false --runInBand App.test.tsx
-```
+4. Open http://localhost:8018. Demonstrate the component library and
+   its global disabled toggle.
 
-Show the passing showcase test.
+5. Prove the required container settings:
 
-Explain:
+   ```bash
+   docker ps --filter name=gatus_cyrus_coding_assignment13
+   docker exec gatus_cyrus_coding_assignment13 pwd
+   curl -I http://127.0.0.1:8018
+   ```
 
-“Every component has a visibility test and a disabled background test.
-There are also interaction tests, including tests that disabled controls
-do not perform their actions.”
+6. Run the quality checks:
 
-### 6. Show the source structure
+   ```bash
+   npm run check
+   ```
 
-Open the project in VS Code:
+   Explain that formatting, code linting, TypeScript, and tests all pass.
 
-```bash
-code .
-```
+7. Show .husky/pre-commit and reproduce the formatting rejection using
+   the commands above. Remove the demonstration file afterward.
 
-Expand src/components/Button and explain:
+8. Open .github/workflows/quality-checks.yml and explain that the remote
+   runner repeats the checks even if local hooks are bypassed.
 
-- Button.tsx: component behaviour and styled-components CSS.
-- Button.types.tsx: accepted TypeScript props.
-- Button.stories.tsx: default/disabled examples and Controls.
-- Button.tests.tsx: automated checks.
-- Index.ts: exports for importing the component elsewhere.
+9. Open GitHub's Actions tab. Show a verified successful workflow run
+   and, once demonstrated, a failed run with its diagnostic logs.
 
-Show the media queries used for responsive styling.
+10. Show Dockerfile. Explain that quality checks run before the
+    production build and Nginx serves the final output.
 
-### 7. Explain production builds
+11. Stop the container when finished:
 
-```bash
-npm run build
-npm run build-storybook
-```
+    ```bash
+    docker stop gatus_cyrus_coding_assignment13
+    ```
 
-Explain:
+## Known limitations
 
-“The first command builds the showcase for production. The second
-creates static Storybook documentation. Docker builds and serves the
-showcase.”
+npm reports vulnerabilities in the existing dependency tree.
+These have not been resolved by formatting or passing tests.
 
-These builds can be prepared before the presentation if time is limited.
-
-### 8. Finish
-
-Stop the assignment container when finished:
-
-```bash
-docker stop gatus_cyrus_coding_assignment12
-```
-
-## Assignment requirement mapping
-
-| Requirement | Implementation |
-| --- | --- |
-| Create React App and TypeScript | react-scripts and TSX source |
-| Storybook | .storybook configuration and component stories |
-| styled-components | Styling in component TSX files |
-| Button, Label, Text | Individual component folders |
-| Table and four subcomponents | Table, TableHeader, TableRow, TableCell, TableFooter |
-| Dropdown and radio button | Dropdown and RadioButton |
-| Img, Hero Image, Card | Img, HeroImage, Card |
-| Five required files per folder | Component, stories, types, tests, Index |
-| Responsive components | Fluid sizing, wrapping, media queries, table wrapper |
-| Editable text and background controls | Storybook argTypes and args where applicable |
-| Default and disabled states | Default and Disabled stories for all 13 components |
-| Disabled appearance and cursor | Grey background and not-allowed cursor |
-| At least two tests per component | 36 component tests |
-| Optimized web app | CRA production build |
-| Production Docker hosting | Node build stage and Nginx runtime |
-| localhost:8083 | Docker port mapping 8083:80 |
-| Required container name | gatus_cyrus_coding_assignment12 |
-| Required working directory | /gatus_cyrus_ui_garden |
-
-## Troubleshooting
-
-### Storybook Controls is missing
-
-Confirm .storybook/main.ts includes `@storybook/addon-essentials`.
-Restart Storybook after changing its configuration.
-
-### Background colour appears unchanged
-
-Select the component's Default story and set disabled to false.
-Disabled styling overrides custom colours.
-
-For TableCell, only the cell background changes, not the whole preview.
-The colour picker may initially be positioned on white.
-
-### Startup is very slow in WSL
-
-Work from ~/projects/gatus_cyrus_ui_garden inside Ubuntu.
-Reading thousands of dependencies through /mnt/c was slow during setup.
-
-Keep the computer awake and avoid running duplicate development servers.
-
-### Docker shows an older version
-
-Rebuild the image and replace the assignment container using the
-“Apply source changes to Docker” commands.
-
-### Container name is already in use
-
-Start the existing container:
-
-```bash
-docker start gatus_cyrus_coding_assignment12
-```
-
-For an updated image, follow the container replacement instructions.
-
-### Port 8083 is occupied
-
-Inspect running containers:
-
-```bash
-docker ps
-```
-
-Identify the application using port 8083 before stopping anything.
-Keep port 8083 for this assignment.
-
-### npm security findings
-
-npm reported dependency vulnerabilities during installation.
-They remain an acknowledged limitation of the current dependency tree.
-
-Inspect the report:
+Inspect them separately:
 
 ```bash
 npm audit
 ```
 
-Do not automatically apply `npm audit fix --force`; it may introduce
-breaking dependency changes. Passing tests does not resolve audit findings.
+Do not apply npm audit fix --force without reviewing its breaking changes.
 
 ## Submission
 
-Before submitting:
-
-1. Publish the current Ubuntu project to GitHub.
-2. Replace the repository URL placeholder in this README with its real URL.
-3. Confirm GitHub contains the source, Storybook configuration,
-   package.json, package-lock.json, Dockerfile, nginx.conf,
-   .dockerignore, README.md, and local image asset.
-4. Exclude node_modules and generated build directories from Git.
-5. Submit Dockerfile and README.md through LEARN.
-6. Include the GitHub repository link.
-7. Confirm the submission receipt.
-
-GitHub repository: https://github.com/Zyo-yo/gatus_cyrus_ui_garden
+- Submit Dockerfile and this README through LEARN.
+- Include the assignment13 branch link.
+- Keep nginx.conf, package.json, package-lock.json, source, quality
+  configuration, Husky hook, and workflow committed in the repository.
+- Do not submit node_modules or generated build folders.
+- Confirm GitHub Actions results before submission.
+- Confirm the LEARN submission receipt.
 
 ## References
 
-- Create React App: https://create-react-app.dev/
-- Storybook 8 documentation: https://storybook.js.org/docs/8/
-- styled-components: https://styled-components.com/docs
-- React Testing Library: https://testing-library.com/docs/react-testing-library/intro/
-- jest-dom: https://github.com/testing-library/jest-dom
-- jest-styled-components: https://github.com/styled-components/jest-styled-components
+- Husky: https://typicode.github.io/husky/
+- Prettier: https://prettier.io/docs/install
+- ESLint: https://eslint.org/docs/v8.x/
+- GitHub Actions: https://docs.github.com/en/actions
 - Docker: https://docs.docker.com/

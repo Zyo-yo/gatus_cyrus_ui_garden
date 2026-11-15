@@ -16,18 +16,25 @@ test('renders a visible dropdown with an accessible label', () => {
 
 test('changes the background colour when disabled', () => {
   const { rerender } = render(
-    <Dropdown label="Course" options={options} backgroundColor="#ffffff" />
+    <Dropdown label="Course" options={options} backgroundColor="#ffffff" />,
   );
   expect(screen.getByRole('combobox')).toHaveStyleRule(
-    'background-color', '#ffffff'
+    'background-color',
+    '#ffffff',
   );
 
   rerender(
-    <Dropdown label="Course" options={options}
-      backgroundColor="#ffffff" disabled />
+    <Dropdown
+      label="Course"
+      options={options}
+      backgroundColor="#ffffff"
+      disabled
+    />,
   );
   expect(screen.getByRole('combobox')).toHaveStyleRule(
-    'background-color', '#d1d5db', { modifier: ':disabled' }
+    'background-color',
+    '#d1d5db',
+    { modifier: ':disabled' },
   );
   expect(screen.getByRole('combobox')).toBeDisabled();
 });
@@ -43,7 +50,7 @@ test('allows selection when enabled', () => {
 test('blocks selection when disabled', () => {
   const onChange = jest.fn();
   render(
-    <Dropdown label="Course" options={options} disabled onChange={onChange} />
+    <Dropdown label="Course" options={options} disabled onChange={onChange} />,
   );
   userEvent.selectOptions(screen.getByRole('combobox'), 'typescript');
   expect(screen.getByRole('combobox')).toHaveValue('react');

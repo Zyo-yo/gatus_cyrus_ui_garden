@@ -16,9 +16,8 @@ const Frame = styled.article<VisualProps>`
   overflow: hidden;
   background-color: ${({ $disabled, $backgroundColor }) =>
     $disabled ? '#d1d5db' : $backgroundColor};
-  color: ${({ $disabled, $textColor }) =>
-    $disabled ? '#4b5563' : $textColor};
-  cursor: ${({ $disabled }) => $disabled ? 'not-allowed' : 'default'};
+  color: ${({ $disabled, $textColor }) => ($disabled ? '#4b5563' : $textColor)};
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'default')};
 
   img {
     display: block;
@@ -26,8 +25,8 @@ const Frame = styled.article<VisualProps>`
     height: auto;
     aspect-ratio: 2 / 1;
     object-fit: cover;
-    opacity: ${({ $disabled }) => $disabled ? 0.35 : 1};
-    filter: ${({ $disabled }) => $disabled ? 'grayscale(1)' : 'none'};
+    opacity: ${({ $disabled }) => ($disabled ? 0.35 : 1)};
+    filter: ${({ $disabled }) => ($disabled ? 'grayscale(1)' : 'none')};
   }
 
   .card-content {
@@ -83,14 +82,12 @@ export function Card({
       }}
       onClick={disabled ? undefined : onClick}
     >
-
-        <img src={src} alt={alt} />
-        <div className="card-content">
-          <h2>{title}</h2>
-          <p>{description}</p>
-          {children}
-        </div>
-
+      <img src={src} alt={alt} />
+      <div className="card-content">
+        <h2>{title}</h2>
+        <p>{description}</p>
+        {children}
+      </div>
     </Frame>
   );
 }

@@ -18,15 +18,15 @@ const StyledElement = styled.table<{
   font: inherit;
   background-color: ${({ $disabled, $backgroundColor }) =>
     $disabled ? '#d1d5db' : $backgroundColor};
-  color: ${({ $disabled, $textColor }) =>
-    $disabled ? '#4b5563' : $textColor};
-  cursor: ${({ $disabled }) => $disabled ? 'not-allowed' : 'default'};
+  color: ${({ $disabled, $textColor }) => ($disabled ? '#4b5563' : $textColor)};
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'default')};
 
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
 
-  th, td {
+  th,
+  td {
     padding: 12px;
     border: 1px solid #9ca3af;
     text-align: left;
@@ -34,7 +34,8 @@ const StyledElement = styled.table<{
   }
 
   @media (max-width: 480px) {
-    th, td {
+    th,
+    td {
       padding: 8px;
       font-size: 14px;
     }
@@ -56,24 +57,24 @@ export function Table({
   return (
     <TableDisabledContext.Provider value={isDisabled}>
       <ScrollArea>
-      <StyledElement
-        {...props}
-        aria-disabled={isDisabled}
-        $backgroundColor={backgroundColor}
-        $textColor={textColor}
-        $disabled={isDisabled}
-        onClickCapture={(event) => {
-          if (isDisabled) {
-            event.preventDefault();
-            event.stopPropagation();
-            return;
-          }
-          onClickCapture?.(event);
-        }}
-        onClick={isDisabled ? undefined : onClick}
-      >
-        {children}
-      </StyledElement>
+        <StyledElement
+          {...props}
+          aria-disabled={isDisabled}
+          $backgroundColor={backgroundColor}
+          $textColor={textColor}
+          $disabled={isDisabled}
+          onClickCapture={(event) => {
+            if (isDisabled) {
+              event.preventDefault();
+              event.stopPropagation();
+              return;
+            }
+            onClickCapture?.(event);
+          }}
+          onClick={isDisabled ? undefined : onClick}
+        >
+          {children}
+        </StyledElement>
       </ScrollArea>
     </TableDisabledContext.Provider>
   );

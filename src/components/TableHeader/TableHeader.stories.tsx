@@ -7,7 +7,9 @@ const meta = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <table><Story /></table>
+      <table>
+        <Story />
+      </table>
     ),
   ],
   argTypes: {
@@ -22,7 +24,12 @@ const meta = {
     disabled: false,
   },
   render: (args) => (
-    <TableHeader {...args}><tr><th scope="col">Course</th><th scope="col">Status</th></tr></TableHeader>
+    <TableHeader {...args}>
+      <tr>
+        <th scope="col">Course</th>
+        <th scope="col">Status</th>
+      </tr>
+    </TableHeader>
   ),
 } satisfies Meta<typeof TableHeader>;
 

@@ -1,0 +1,7 @@
+node_modules/
+build/
+storybook-static/
+coverage/
+package-lock.json
+gatus_cyrus_coding_assignment12/
+starts

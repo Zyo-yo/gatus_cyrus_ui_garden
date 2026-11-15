@@ -10,19 +10,19 @@ test('renders visible text', () => {
 
 test('changes its background colour when disabled', () => {
   const { rerender } = render(
-    <Text text="Welcome" backgroundColor="#f3f4f6" />
+    <Text text="Welcome" backgroundColor="#f3f4f6" />,
   );
   expect(screen.getByText('Welcome')).toHaveStyleRule(
-    'background-color', '#f3f4f6'
+    'background-color',
+    '#f3f4f6',
   );
 
   rerender(<Text text="Welcome" backgroundColor="#f3f4f6" disabled />);
   expect(screen.getByText('Welcome')).toHaveStyleRule(
-    'background-color', '#d1d5db'
+    'background-color',
+    '#d1d5db',
   );
-  expect(screen.getByText('Welcome')).toHaveStyleRule(
-    'cursor', 'not-allowed'
-  );
+  expect(screen.getByText('Welcome')).toHaveStyleRule('cursor', 'not-allowed');
 });
 
 test('blocks its click handler when disabled', () => {

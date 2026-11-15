@@ -19,25 +19,27 @@ test('renders a visible component and accessible image', () => {
 
 test('changes the background colour when disabled', () => {
   const { rerender } = render(
-    <Img {...props} data-testid="subject"
-      backgroundColor="#eff6ff" />
+    <Img {...props} data-testid="subject" backgroundColor="#eff6ff" />,
   );
   expect(screen.getByTestId('subject')).toHaveStyleRule(
-    'background-color', '#eff6ff'
+    'background-color',
+    '#eff6ff',
   );
 
   rerender(
-    <Img {...props} data-testid="subject"
-      backgroundColor="#eff6ff" disabled />
+    <Img {...props} data-testid="subject" backgroundColor="#eff6ff" disabled />,
   );
   expect(screen.getByTestId('subject')).toHaveStyleRule(
-    'background-color', '#d1d5db'
+    'background-color',
+    '#d1d5db',
   );
   expect(screen.getByTestId('subject')).toHaveStyleRule(
-    'cursor', 'not-allowed'
+    'cursor',
+    'not-allowed',
   );
   expect(screen.getByTestId('subject')).toHaveAttribute(
-    'aria-disabled', 'true'
+    'aria-disabled',
+    'true',
   );
 });
 

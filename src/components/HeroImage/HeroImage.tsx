@@ -20,9 +20,8 @@ const Frame = styled.section<VisualProps>`
   overflow: hidden;
   background-color: ${({ $disabled, $backgroundColor }) =>
     $disabled ? '#d1d5db' : $backgroundColor};
-  color: ${({ $disabled, $textColor }) =>
-    $disabled ? '#4b5563' : $textColor};
-  cursor: ${({ $disabled }) => $disabled ? 'not-allowed' : 'default'};
+  color: ${({ $disabled, $textColor }) => ($disabled ? '#4b5563' : $textColor)};
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'default')};
 
   img {
     position: absolute;
@@ -31,8 +30,8 @@ const Frame = styled.section<VisualProps>`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: ${({ $disabled }) => $disabled ? 0.12 : 0.25};
-    filter: ${({ $disabled }) => $disabled ? 'grayscale(1)' : 'none'};
+    opacity: ${({ $disabled }) => ($disabled ? 0.12 : 0.25)};
+    filter: ${({ $disabled }) => ($disabled ? 'grayscale(1)' : 'none')};
   }
 
   h2 {
@@ -85,14 +84,12 @@ export function HeroImage({
       }}
       onClick={disabled ? undefined : onClick}
     >
-
-        <img src={src} alt={alt} />
-        <div>
-          <h2>{title}</h2>
-          <p>{description}</p>
-          {children}
-        </div>
-
+      <img src={src} alt={alt} />
+      <div>
+        <h2>{title}</h2>
+        <p>{description}</p>
+        {children}
+      </div>
     </Frame>
   );
 }

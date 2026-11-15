@@ -7,7 +7,11 @@ const meta = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <table><tbody><Story /></tbody></table>
+      <table>
+        <tbody>
+          <Story />
+        </tbody>
+      </table>
     ),
   ],
   argTypes: {
@@ -22,7 +26,12 @@ const meta = {
     disabled: false,
   },
   render: (args) => (
-    <TableRow {...args}><><td>React</td><td>Complete</td></></TableRow>
+    <TableRow {...args}>
+      <>
+        <td>React</td>
+        <td>Complete</td>
+      </>
+    </TableRow>
   ),
 } satisfies Meta<typeof TableRow>;
 

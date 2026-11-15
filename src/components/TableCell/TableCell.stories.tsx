@@ -7,7 +7,13 @@ const meta = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <table><tbody><tr><Story /></tr></tbody></table>
+      <table>
+        <tbody>
+          <tr>
+            <Story />
+          </tr>
+        </tbody>
+      </table>
     ),
   ],
   argTypes: {
@@ -21,9 +27,7 @@ const meta = {
     textColor: '#111827',
     disabled: false,
   },
-  render: (args) => (
-    <TableCell {...args}>{'React'}</TableCell>
-  ),
+  render: (args) => <TableCell {...args}>{'React'}</TableCell>,
 } satisfies Meta<typeof TableCell>;
 
 export default meta;
