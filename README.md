@@ -338,7 +338,16 @@ push; it does not prevent the push itself. To block merging failed
 changes, configure branch protection or a ruleset requiring the
 "Quality checks and production build" status check.
 
-Remote workflow verification: pending the first pushed workflow run.
+Remote workflow verification completed:
+
+- assignment13, commit 0fad001: all quality checks and the production build passed.
+- assignment13-ci-demo, commit aa75c6e: Husky was deliberately bypassed.
+  GitHub Actions detected the intentional failing test: 1 failed and
+  37 passed. The production build was skipped.
+- The demonstration branch is intentionally failing and must not be merged.
+
+View the successful and failed runs:
+https://github.com/Zyo-yo/gatus_cyrus_ui_garden/actions
 
 ## Run the component library locally
 
